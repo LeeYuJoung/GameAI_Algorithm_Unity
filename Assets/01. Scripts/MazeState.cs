@@ -13,7 +13,7 @@ public class MazeState : MonoBehaviour
     }
     public Coord character = new Coord();
 
-    // 오른쪽, 왼쪽, 아래쪽, 위쪽을 ㅗ이동하는 이동방향 x와 y축 값
+    // 오른쪽, 왼쪽, 아래쪽, 위쪽으로 이동하는 이동방향 x와 y축 값
     public int[] dx = new int[4] {1, -1, 0, 0};    
     public int[] dy = new int[4] {0, 0, 1, -1};
 
@@ -27,7 +27,7 @@ public class MazeState : MonoBehaviour
 
     void Start()
     {
-
+        Play();
     }
 
     void Update()
@@ -35,7 +35,7 @@ public class MazeState : MonoBehaviour
         
     }
 
-    // h*w 크기의 미로를 생성
+    // h * w 크기의 미로를 생성
     public void CreateMaze(int seed)
     {
         // 게임판 구성용 난수 생성
@@ -93,15 +93,26 @@ public class MazeState : MonoBehaviour
     // 현재 게임 상황을 문자열로 표현
     public string MazeToString()
     {
+        string s = string.Empty;
 
-        return "";
+        return s;
     }
 
     // 무작위로 행동을 결정하는 AI 구현
     public int RandomActionAI()
     {
+        // 행동 선택용 난수 생성기 초기화
+        
+        return LegalActions();
+    }
 
-        return 0;
+    // 시드를 지정해서 게임 상황을 표시하면서 AI에 플레이
+    public void Play()
+    {
+        while (!IsDone())
+        {
+            Advance(RandomActionAI());
+        }
     }
 
     // 게임 종료
