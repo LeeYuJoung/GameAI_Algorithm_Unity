@@ -3,9 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Chaper03. 숫자 모으기 미로 구현
+// Chaper03.01 숫자 모으기 미로 AI
+// 1인 게임 규칙
+// 1턴에 상하좌우 네 방향 중 하나로 1칸 이동
+// 바닥에 있는 점수를 차지하면 자신의 점수가 되고, 바닥의 점수는 사라짐
+// END_TURN 시점에 높은 점수를 얻는 것이 목적
 public class MazeState : MonoBehaviour
 {
+    // 좌표 저장 구조체
     public struct Coord
     {
         public int x;
@@ -17,22 +22,22 @@ public class MazeState : MonoBehaviour
     public int[] dx = new int[4] {1, -1, 0, 0};    
     public int[] dy = new int[4] {0, 0, 1, -1};
 
-    public const int H = 3;        // 미로의 높이
-    public const int W = 4;        // 미로의 너비
+    public const int H = 3;        // 미로의 높이 (y축)
+    public const int W = 4;        // 미로의 너비 (x축)
     public const int END_TURN = 4; // 게임 종료의 턴
 
-    private int[,] points = new int[H, W];   // 바닥의 점수는 1~9 중 하나
+    private int[][] points = { };  // 바닥의 점수는 1~9 중 하나
     private int turn = 0;          // 현재 턴
     public int gameScore = 0;      // 게임에서 획득한 점수
 
     void Start()
     {
-        Play();
+
     }
 
     void Update()
     {
-        
+
     }
 
     // h * w 크기의 미로를 생성
@@ -50,7 +55,7 @@ public class MazeState : MonoBehaviour
                 {
                     continue;
                 }
-                points[y, x] = Random.Range(0, seed) % 10;
+                points[y][x] = Random.Range(0, seed) % 10;
             }
         }
     }
@@ -60,14 +65,14 @@ public class MazeState : MonoBehaviour
     {
         character.x += dx[action];
         character.y += dy[action];
-
-        int point = points[character.y, character.x];
+        int point = points[character.y][character.x];
 
         if(point > 0)
         {
             gameScore += point;
             point = 0;
         }
+
         turn++;
     }
 
@@ -90,19 +95,11 @@ public class MazeState : MonoBehaviour
         return actions;
     }
 
-    // 현재 게임 상황을 문자열로 표현
-    public string MazeToString()
-    {
-        string s = string.Empty;
-
-        return s;
-    }
-
-    // 무작위로 행동을 결정하는 AI 구현
+    // 무작위로 행동을 결정하는 AI
     public int RandomActionAI()
     {
         // 행동 선택용 난수 생성기 초기화
-        
+
         return LegalActions();
     }
 
@@ -113,6 +110,14 @@ public class MazeState : MonoBehaviour
         {
             Advance(RandomActionAI());
         }
+    }
+
+    // 현재 게임 상황을 문자열로 표현
+    public string MazeToString()
+    {
+        string s = string.Empty;
+
+        return s;
     }
 
     // 게임 종료
