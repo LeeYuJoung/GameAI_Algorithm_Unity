@@ -26,13 +26,13 @@ public class MazeState : MonoBehaviour
     public const int W = 4;        // 미로의 너비 (x축)
     public const int END_TURN = 4; // 게임 종료의 턴
 
-    private int[][] points = { };  // 바닥의 점수는 1~9 중 하나
+    private int[,] points = new[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };  // 바닥의 점수는 1~9 중 하나
     private int turn = 0;          // 현재 턴
     public int gameScore = 0;      // 게임에서 획득한 점수
 
     void Start()
     {
-
+        CreateMaze(10);
     }
 
     void Update()
@@ -43,11 +43,12 @@ public class MazeState : MonoBehaviour
     // h * w 크기의 미로를 생성
     public void CreateMaze(int seed)
     {
-        // 게임판 구성용 난수 생성
-        character.x = Random.Range(0, seed) % W;
-        character.y = Random.Range(0, seed) % H;
+        // 플레이어 랜덤 난수 생성 (3*4 게임판 위 랜덤한 위치에 플레이어 초기 설정)
+        character.x = Random.Range(0, 4);
+        character.y = Random.Range(0, 3);
 
-        for(int y = 0; y < H; y++)
+        // 게임판 구성용 랜덤 난수 생성
+        for (int y = 0; y < H; y++)
         {
             for(int x = 0; x < W; x++)
             {
@@ -55,7 +56,8 @@ public class MazeState : MonoBehaviour
                 {
                     continue;
                 }
-                points[y][x] = Random.Range(0, seed) % 10;
+
+                points[y, x] = Random.Range(0, seed) % 10;
             }
         }
     }
@@ -65,7 +67,7 @@ public class MazeState : MonoBehaviour
     {
         character.x += dx[action];
         character.y += dy[action];
-        int point = points[character.y][character.x];
+        int point = points[character.y, character.x];
 
         if(point > 0)
         {
@@ -110,14 +112,6 @@ public class MazeState : MonoBehaviour
         {
             Advance(RandomActionAI());
         }
-    }
-
-    // 현재 게임 상황을 문자열로 표현
-    public string MazeToString()
-    {
-        string s = string.Empty;
-
-        return s;
     }
 
     // 게임 종료
