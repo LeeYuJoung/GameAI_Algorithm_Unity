@@ -26,7 +26,7 @@ public class MazeState : MonoBehaviour
     public const int W = 4;        // 미로의 너비 (x축)
     public const int END_TURN = 4; // 게임 종료의 턴
 
-    private int[,] points = new[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };  // 바닥의 점수는 1~9 중 하나
+    private int[,] points = new[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };  // 바닥의 점수는 1~9 중 하나
     private int turn = 0;          // 현재 턴
     public int gameScore = 0;      // 게임에서 획득한 점수
 
@@ -37,7 +37,7 @@ public class MazeState : MonoBehaviour
 
     void Update()
     {
-
+        Play();
     }
 
     // h * w 크기의 미로를 생성
