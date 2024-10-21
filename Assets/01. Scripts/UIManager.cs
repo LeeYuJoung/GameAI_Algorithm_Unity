@@ -16,14 +16,21 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if(instance != null)
         {
-            instance = this;
+            Destroy(instance);
         }
+
+        instance = this;
     }
 
     void Start()
     {
         
+    }
+
+    public void TextUpdate(int _turn, int _point)
+    {
+
     }
 }
