@@ -18,9 +18,13 @@ public class MazeState : MonoBehaviour
     }
     public Coord character = new Coord();
 
+    public GameObject[] numPrefabs;
+    public GameObject playerPrefab;
+    private Transform player;
+
     // 오른쪽, 왼쪽, 아래쪽, 위쪽으로 이동하는 이동방향 x와 y축 값
-    public int[] dx = new int[4] {1, -1, 0, 0};    
-    public int[] dy = new int[4] {0, 0, 1, -1};
+    public int[] dx = new int[4] { 1, -1, 0, 0 };
+    public int[] dy = new int[4] { 0, 0, 1, -1 };
 
     public const int H = 3;        // 미로의 높이 (y축)
     public const int W = 4;        // 미로의 너비 (x축)
@@ -32,7 +36,7 @@ public class MazeState : MonoBehaviour
 
     void Start()
     {
-        CreateMaze(10);
+        CreateMaze(11);
     }
 
     void Update()
@@ -46,6 +50,7 @@ public class MazeState : MonoBehaviour
         // 플레이어 랜덤 난수 생성 (3*4 게임판 위 랜덤한 위치에 플레이어 초기 설정)
         character.x = Random.Range(0, 4);
         character.y = Random.Range(0, 3);
+        player = Instantiate(playerPrefab, new Vector3(character.x, character.y, 0.0f), Quaternion.identity).transform;
 
         // 게임판 구성용 랜덤 난수 생성
         for (int y = 0; y < H; y++)
@@ -57,8 +62,18 @@ public class MazeState : MonoBehaviour
                     continue;
                 }
 
-                points[y, x] = Random.Range(0, seed) % 10;
+                points[y, x] = Random.Range(1, seed);
+                Instantiate(numPrefabs[points[y, x]], new Vector3(x, y, 0.0f), Quaternion.identity);
             }
+        }
+    }
+
+    // 게임 상황을 표시하면서 AI에 플레이
+    public void Play()
+    {
+        while (!IsDone())
+        {
+            Advance(RandomActionAI());
         }
     }
 
@@ -76,6 +91,16 @@ public class MazeState : MonoBehaviour
         }
 
         turn++;
+
+        // 현재 Turn & Point Text에 표시
+        
+    }
+
+    // 무작위로 행동을 결정하는 AI
+    public int RandomActionAI()
+    {
+        // 행동 선택용 난수 생성기 초기화
+        return LegalActions();
     }
 
     // 현재 상황에서 플레이어가 가능한 행동을 모두 획득
@@ -95,23 +120,6 @@ public class MazeState : MonoBehaviour
         }
 
         return actions;
-    }
-
-    // 무작위로 행동을 결정하는 AI
-    public int RandomActionAI()
-    {
-        // 행동 선택용 난수 생성기 초기화
-
-        return LegalActions();
-    }
-
-    // 시드를 지정해서 게임 상황을 표시하면서 AI에 플레이
-    public void Play()
-    {
-        while (!IsDone())
-        {
-            Advance(RandomActionAI());
-        }
     }
 
     // 게임 종료
