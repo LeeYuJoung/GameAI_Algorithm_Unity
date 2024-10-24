@@ -31,6 +31,7 @@ public class UIManager : MonoBehaviour
 
     public void TextUpdate(int _turn, int _point)
     {
-
+        turnText.text = string.Format("현재턴 : {0:00}", _turn);
+        pointText.text = string.Format("현재점수 : {0:00}", _point);
     }
 }

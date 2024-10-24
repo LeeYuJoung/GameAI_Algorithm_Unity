@@ -8,7 +8,7 @@ using UnityEngine;
 // 1턴에 상하좌우 네 방향 중 하나로 1칸 이동
 // 바닥에 있는 점수를 차지하면 자신의 점수가 되고, 바닥의 점수는 사라짐
 // END_TURN 시점에 높은 점수를 얻는 것이 목적
-public class MazeState : MonoBehaviour
+public class Chapter03_01_MazeState : MonoBehaviour
 {
     // 좌표 저장 구조체
     public struct Coord
@@ -19,8 +19,7 @@ public class MazeState : MonoBehaviour
     public Coord character = new Coord();
 
     public GameObject[] numPrefabs;
-    public GameObject playerPrefab;
-    private Transform player;
+    public GameObject player;
 
     // 오른쪽, 왼쪽, 아래쪽, 위쪽으로 이동하는 이동방향 x와 y축 값
     public int[] dx = new int[4] { 1, -1, 0, 0 };
@@ -30,18 +29,13 @@ public class MazeState : MonoBehaviour
     public const int W = 4;        // 미로의 너비 (x축)
     public const int END_TURN = 4; // 게임 종료의 턴
 
-    private int[,] points = new[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };  // 바닥의 점수는 1~9 중 하나
-    private int turn = 0;          // 현재 턴
+    public int[,] points = new[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };  // 바닥의 점수는 1~9 중 하나
+    public int turn = 0;          // 현재 턴
     public int gameScore = 0;      // 게임에서 획득한 점수
 
     void Start()
     {
-        CreateMaze(11);
-    }
-
-    void Update()
-    {
-        Play();
+        CreateMaze(10);
     }
 
     // h * w 크기의 미로를 생성
@@ -50,9 +44,9 @@ public class MazeState : MonoBehaviour
         // 플레이어 랜덤 난수 생성 (3*4 게임판 위 랜덤한 위치에 플레이어 초기 설정)
         character.x = Random.Range(0, 4);
         character.y = Random.Range(0, 3);
-        player = Instantiate(playerPrefab, new Vector3(character.x, character.y, 0.0f), Quaternion.identity).transform;
+        player.transform.position = new Vector3(character.x, character.y, 0.0f); 
 
-        // 게임판 구성용 랜덤 난수 생성
+        // 게임판 구성용 난수 랜덤 생성
         for (int y = 0; y < H; y++)
         {
             for(int x = 0; x < W; x++)
@@ -63,7 +57,7 @@ public class MazeState : MonoBehaviour
                 }
 
                 points[y, x] = Random.Range(1, seed);
-                Instantiate(numPrefabs[points[y, x]], new Vector3(x, y, 0.0f), Quaternion.identity);
+                Instantiate(numPrefabs[points[y, x] - 1], new Vector3(x, y, 0.0f), Quaternion.identity);
             }
         }
     }
@@ -71,7 +65,7 @@ public class MazeState : MonoBehaviour
     // 게임 상황을 표시하면서 AI에 플레이
     public void Play()
     {
-        while (!IsDone())
+        if (!IsDone())
         {
             Advance(RandomActionAI());
         }
@@ -87,39 +81,34 @@ public class MazeState : MonoBehaviour
         if(point > 0)
         {
             gameScore += point;
+            points[character.y, character.x] = 0;
             point = 0;
         }
 
         turn++;
+        player.transform.position = new Vector3(character.x, character.y, 0.0f);
 
         // 현재 Turn & Point Text에 표시
-        
+        UIManager.Instance().TextUpdate(turn, gameScore);
     }
 
     // 무작위로 행동을 결정하는 AI
     public int RandomActionAI()
     {
-        // 행동 선택용 난수 생성기 초기화
-        return LegalActions();
-    }
-
-    // 현재 상황에서 플레이어가 가능한 행동을 모두 획득
-    public int LegalActions()
-    {
         int actions = 0;
 
-        for(int action = 0; action < 4; action ++)
+        while (true)
         {
+            int action = Random.Range(0, 4);
             int ty = character.y + dy[action];
             int tx = character.x + dx[action];
 
-            if(ty >= 0 && ty< H && tx >= 0 && tx < W)
+            if (ty >= 0 && ty < H && tx >= 0 && tx < W)
             {
                 actions = action;
+                return actions;
             }
         }
-
-        return actions;
     }
 
     // 게임 종료
