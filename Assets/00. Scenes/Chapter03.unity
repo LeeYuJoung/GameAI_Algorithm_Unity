@@ -698,6 +698,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9a7700ce34f4d343875ea75c6559bd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numPrefabs:
+  - {fileID: 8248507955851873095, guid: 55dd5d276139ecf4ab7af506fb31ad42, type: 3}
+  - {fileID: 6745333877269773627, guid: 912ef553d6135fb46929b5f1c8116fad, type: 3}
+  - {fileID: 4834020704902689076, guid: 9b06e8ca277ee9247bd4c8722f84dee0, type: 3}
+  - {fileID: 5852246408462887732, guid: 2aa49f68158d02f45b79b1f81890c639, type: 3}
+  - {fileID: 6039593345689511916, guid: f81f1cf458045ab448e29e5bc30b5179, type: 3}
+  - {fileID: 2410267105668985653, guid: 28cda53e9b4875444aa4c991159abb6d, type: 3}
+  - {fileID: 1486632287778611534, guid: 3ee4d4cd76b019f43b0734ef1e4ff9ca, type: 3}
+  - {fileID: 877977324097571308, guid: f54aefe947864e9428b678c8497ab2ed, type: 3}
+  - {fileID: 3804266265950474031, guid: 7b8272b73aa0d4049964d07aaae09065, type: 3}
+  player: {fileID: 1993573594}
+  dx: 01000000ffffffff0000000000000000
+  dy: 000000000000000001000000ffffffff
+  turn: 0
+  gameScore: 0
 --- !u!4 &908462817
 Transform:
   m_ObjectHideFlags: 0
