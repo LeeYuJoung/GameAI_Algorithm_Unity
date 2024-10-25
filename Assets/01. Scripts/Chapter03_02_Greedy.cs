@@ -27,7 +27,7 @@ public class Chapter03_02_Greedy : MonoBehaviour
 
     public int[,] points = new[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };  // 바닥의 점수는 1~9 중 하나
     public int turn = 0;          // 현재 턴
-    public int gameScore = 0;      // 게임에서 획득한 점수
+    public int gameScore = 0;     // 게임에서 획득한 점수
 
     void Start()
     {
@@ -63,7 +63,7 @@ public class Chapter03_02_Greedy : MonoBehaviour
     {
         if (!IsDone())
         {
-            Advance(RandomActionAI());
+            Advance(GreedyAction());
         }
     }
 
@@ -88,6 +88,7 @@ public class Chapter03_02_Greedy : MonoBehaviour
         UIManager.Instance().TextUpdate(turn, gameScore);
     }
 
+    #region Random_AI
     // 무작위로 행동을 결정하는 AI
     public int RandomActionAI()
     {
@@ -106,6 +107,23 @@ public class Chapter03_02_Greedy : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #region Greedy_AI
+    // Greedy Algorithm으로 행동 결정하는 AI
+    public int GreedyAction()
+    {
+        int bestScore = 0;
+        int bestAction = 0;
+
+        for(int action = 0; action < 1; action++)
+        {
+            
+        }
+
+        return bestAction;
+    }
+    #endregion
 
     // 게임 종료
     public bool IsDone()

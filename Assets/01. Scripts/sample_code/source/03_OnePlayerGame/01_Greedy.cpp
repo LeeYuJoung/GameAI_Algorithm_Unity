@@ -170,6 +170,7 @@ void playGame(const int seed)
         cout << state.toString() << endl;
     }
 }
+
 int main()
 {
     playGame(/*게임판 초기화 시드*/ 121321);
