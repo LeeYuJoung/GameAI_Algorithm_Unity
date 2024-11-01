@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Chapter03.02 그리디 알고리즘 (Greedy Algorithm)
-// 1턴 후에 발생 가능한 모든 결과 중에서 가장 평가가 높은 결과를 내는 행동 선택
-public class Chapter03_02_Greedy : MonoBehaviour
+// Chapter03.03 빔탐색
+// 빔 너비와 깊이를 지정해서 빔 탐색으로 행동을 결정
+public class Chapter03_03_BeamSearch : MonoBehaviour
 {
     // 좌표 저장 구조체
     public struct Coord
@@ -27,7 +27,7 @@ public class Chapter03_02_Greedy : MonoBehaviour
 
     public int[,] points = new[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };  // 바닥의 점수는 1~9 중 하나
     public int turn = 0;          // 현재 턴
-    public int gameScore = 0;     // 게임에서 획득한 점수
+    public int gameScore = 0;      // 게임에서 획득한 점수
 
     void Start()
     {
@@ -63,7 +63,7 @@ public class Chapter03_02_Greedy : MonoBehaviour
     {
         if (!IsDone())
         {
-            Advance(GreedyAction());
+            Advance(BeamSearch_AI());
         }
     }
 
@@ -109,29 +109,13 @@ public class Chapter03_02_Greedy : MonoBehaviour
     }
     #endregion
 
-    #region Greedy_AI
-    // Greedy Algorithm으로 행동 결정하는 AI
-    public int GreedyAction()
+    #region BeamSearch
+    public int BeamSearch_AI()
     {
-        int bestScore = 0;
-        int bestAction = 0;
+        int beamWidth = 0;
+        int beamDepth = 0;
 
-        for(int action = 0; action < 4; action++)
-        {
-            int ty = character.y + dy[action];
-            int tx = character.x + dx[action];
-
-            if(ty >= 0 && ty < H && tx >= 0 && tx < W)
-            {
-                if(bestScore <= points[ty, tx])
-                {
-                    bestScore = points[ty, tx];
-                    bestAction = action;
-                }
-            }
-        }
-
-        return bestAction;
+        return 0;
     }
     #endregion
 

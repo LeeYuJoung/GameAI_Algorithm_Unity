@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Number"))
         {
-            Debug.Log("Collideeeer");
             Destroy(other.gameObject);
         }
     }
