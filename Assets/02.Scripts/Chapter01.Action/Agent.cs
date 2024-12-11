@@ -31,7 +31,7 @@ public class Agent : MonoBehaviour
         Vector3 displacement = velocity * Time.deltaTime;
         orientation = orientation * Time.deltaTime;
 
-        // 회전 값둘위 범위를 0~360 사이로 제한
+        // 회전 값들의 범위를 0~360 사이로 제한
         if(orientation < 0.0f)
         {
             orientation += 360.0f;
@@ -51,6 +51,7 @@ public class Agent : MonoBehaviour
         velocity += steering.linear * Time.deltaTime;
         rotation += steering.angular * Time.deltaTime;
 
+        // 벡터의 길이를 반환했을 때 maxSpeed보다 크다면
         if(velocity.magnitude > maxSpeed)
         {
             velocity.Normalize();

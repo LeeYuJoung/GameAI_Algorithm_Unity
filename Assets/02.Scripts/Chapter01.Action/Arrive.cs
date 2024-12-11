@@ -1,19 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-// 도착
-public class Arrive : MonoBehaviour
+// 목적지에 도착하거나 위험 지점으로부터 충분히 멀어졌다는 조건이 충족되면 Agent 자동으로 중지
+public class Arrive : AgentBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float targetRadius;
+    public float slowRadius;
+    public float timeToTarget = 0.1f;
 
-    // Update is called once per frame
-    void Update()
+    public override Steering GetSteering()
     {
-        
+        return base.GetSteering();
     }
 }
