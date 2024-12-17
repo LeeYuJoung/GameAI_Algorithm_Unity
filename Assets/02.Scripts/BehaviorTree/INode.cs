@@ -6,11 +6,11 @@ public interface INode
 {
     public enum STATE
     {
-        RUN,       // 실행 중 
+        RUN,       // 동작 중 
         SUCCESS,   // 성공
         FAILED     // 실패
     }
 
-    // 판단하여 상태 전달
-    public INode.STATE Evaluate();
+    // Node 상태 반환
+    public STATE Evaluate();
 }
