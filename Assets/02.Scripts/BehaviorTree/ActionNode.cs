@@ -6,7 +6,7 @@ using UnityEngine;
 // 실제로 어떤 행동을 수행하는 노드, 무조건 true 반환 (leaf Node)
 public class ActionNode : INode
 {
-    // 반환옇이 INode.STATE인 대리자
+    // 반환형이 INode.STATE인 대리자
     public Func<INode.STATE> action = null;
 
     // 노드를 생성할 때 매개변수로 대리자를 받음

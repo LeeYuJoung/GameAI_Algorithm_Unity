@@ -3,7 +3,7 @@ using UnityEngine;
 
 // 여러 행동을 순서대로 진행해야 할 때 사용 (and 연산자)
 // 모든 자식 노드들이 실패하지 않아야 성공으로 간주 (실패한 노드가 있을 때 까지 진행)
-public class SequenceNode : MonoBehaviour
+public class SequenceNode : INode
 {
     List<INode> childrens; // 자식 노드들을 담을 수 있는 리스트
 
