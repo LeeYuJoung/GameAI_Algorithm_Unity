@@ -5,13 +5,15 @@ using UnityEngine;
 // 모든 자식 노드들이 실패하지 않아야 성공으로 간주 (실패한 노드가 있을 때 까지 진행)
 public class SequenceNode : INode
 {
-    List<INode> childrens; // 자식 노드들을 담을 수 있는 리스트
+    // 자식 노드들을 담을 수 있는 리스트
+    List<INode> childrens;
 
     public SequenceNode()
     { 
         childrens = new List<INode>(); 
     }
 
+    //  Sequence에 자식 노드를 추가하는 함수
     public void Add(INode node) 
     { 
         childrens.Add(node); 
@@ -22,7 +24,9 @@ public class SequenceNode : INode
     {
         // 자식 노드의 수가 0 이하라면 실패
         if (childrens == null || childrens.Count <= 0)
+        {
             return INode.STATE.FAILED;
+        }
 
         foreach (INode child in childrens)
         {
@@ -38,7 +42,8 @@ public class SequenceNode : INode
                     return INode.STATE.FAILED;
             }
         }
-        // FAILED 에 걸리지 않고 반복문을 빠져나왔으므로 시퀀스는 SUCCESS
+
+        // FAILED에 걸리지 않고 반복문을 빠져나왔으므로 시퀀스는 SUCCESS
         return INode.STATE.SUCCESS;
     }
 }
